@@ -1,7 +1,7 @@
-all : compile
+all: compile
 
-compile : 
+compile: Case.h main.cpp
 	g++ -g -Wall -o main main.cpp
 
-clean :
+clean:
 	rm -f main
