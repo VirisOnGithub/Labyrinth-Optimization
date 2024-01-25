@@ -18,7 +18,7 @@ public:
 };
 
 Case::Case()
-    : symbol(' '), visited(false), isWall(false), isStart(false), isEnd(false) {}
+    : symbol('X'), visited(false), isWall(false), isStart(false), isEnd(false) {}
 
 Case::~Case() {}
 
