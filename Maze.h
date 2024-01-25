@@ -14,6 +14,7 @@ public:
     Maze(int sizex, int sizey);
     ~Maze();
     void display() const;
+    std::vector<Case> &operator[](int index);
 };
 
 #endif // MAZE_H

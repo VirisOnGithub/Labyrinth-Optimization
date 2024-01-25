@@ -18,3 +18,8 @@ void Maze::display() const
         std::cout << std::endl;
     }
 }
+
+std::vector<Case> &Maze::operator[](int index)
+{
+    return maze[index];
+}
