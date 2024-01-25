@@ -14,3 +14,6 @@ Maze.o: Maze.h Maze.cpp Case.h Case.cpp
 
 clean:
 	rm -f main
+
+mrproper: clean
+	rm -f *.o
