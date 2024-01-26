@@ -17,7 +17,9 @@ class Maze {
   void parcoursenlargeur(int startingx,
                          int startingy,
                          int endingx,
-                         int endingy);
+                         int endingy,
+                         int sizex,
+                         int sizey);
 };
 
 #endif  // MAZE_H

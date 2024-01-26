@@ -46,4 +46,8 @@ int main() {
     std::cin >> answer;
   }
   maze.display();
+  std::cout << std::endl;
+
+  maze.parcoursenlargeur(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
+                         sizex, sizey);
 }

@@ -60,3 +60,7 @@ void Case::setVisited() {
 bool Case::getVisited() const {
   return visited;
 }
+
+bool Case::getWall() {
+  return isWall;
+}
