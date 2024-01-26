@@ -8,7 +8,9 @@ Case::Case()
       isStart(false),
       isEnd(false) {}
 
-Case::~Case() {}
+Case::~Case() {
+  parent = nullptr;
+}
 
 Case::Case(char symbol, bool visited, bool isWall, bool isStart, bool isEnd)
     : symbol(symbol),
@@ -19,6 +21,10 @@ Case::Case(char symbol, bool visited, bool isWall, bool isStart, bool isEnd)
 
 char Case::getSymbol() const {
   return symbol;
+}
+
+void Case::setSymbol(char symbol) {
+  this->symbol = symbol;
 }
 
 void Case::setStartCase() {

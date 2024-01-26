@@ -15,7 +15,7 @@ int main() {
 
   std::cout << "Enter starting position (x y): ";
   std::cin >> startingx >> startingy;
-  maze[startingy - 1][startingx - 1].setStartCase();
+  maze[startingx - 1][startingy - 1].setStartCase();
   std::cout << std::endl;
   maze.display();
   std::cout << std::endl;
@@ -23,7 +23,7 @@ int main() {
   do {
     std::cout << "Enter ending position (x y): ";
     std::cin >> endingx >> endingy;
-    maze[endingy - 1][endingx - 1].setEndCase();
+    maze[endingx - 1][endingy - 1].setEndCase();
   } while (endingx == startingx && endingy == startingy);
   std::cout << std::endl;
   maze.display();

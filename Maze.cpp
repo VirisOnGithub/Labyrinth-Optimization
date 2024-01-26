@@ -54,6 +54,7 @@ void Maze::parcoursenlargeur(int startingx,
     // Vérifier si on a atteint la destination
     if (x == endingx && y == endingy) {
       std::cout << "Destination atteinte !" << std::endl;
+      drawPath(endingx, endingy);
       return;
     }
 
@@ -71,6 +72,7 @@ void Maze::parcoursenlargeur(int startingx,
           !maze[nx][ny].getVisited() && !maze[nx][ny].getWall()) {
         // Ajouter les coordonnées du voisin à la file d'attente et marquer
         // comme visité
+        maze[nx][ny].parent = &maze[x][y];
         q.push(std::make_pair(nx, ny));
         visited[nx][ny] = true;
       }
@@ -78,4 +80,15 @@ void Maze::parcoursenlargeur(int startingx,
   }
 
   std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
+}
+
+void Maze::drawPath(int endingx, int endingy) {
+  Case* current = &maze[endingx][endingy];
+  current = current->parent;
+  while (current->parent != nullptr) {
+    current->setSymbol('*');
+    current = current->parent;
+  }
+
+  display();
 }

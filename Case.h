@@ -10,6 +10,7 @@ class Case {
   bool isEnd;
 
  public:
+  Case* parent;
   Case();
   Case(char symbol,
        bool visited = false,
@@ -18,6 +19,7 @@ class Case {
        bool isEnd = false);
   ~Case();
   char getSymbol() const;
+  void setSymbol(char symbol);
   bool getVisited() const;
   void setStartCase();
   void setEndCase();
