@@ -14,34 +14,36 @@ int main() {
   std::cout << std::endl;
 
   std::cout << "Enter starting position (x y): ";
+  std::cin >> startingx >> startingy;
+  maze[startingy - 1][startingx - 1].setStartCase();
+  std::cout << std::endl;
+  maze.display();
+  std::cout << std::endl;
+
   do {
-    std::cin >> startingx >> startingy;
-    maze[startingy - 1][startingx - 1].setStartCase();
-    std::cout << std::endl;
-    maze.display();
-    std::cout << std::endl;
+    std::cout << "Enter ending position (x y): ";
+    std::cin >> endingx >> endingy;
+    maze[endingy - 1][endingx - 1].setEndCase();
+  } while (endingx == startingx && endingy == startingy);
+  std::cout << std::endl;
+  maze.display();
+  std::cout << std::endl;
 
+  std::cout << "Do you want to add a wall? (y/n) ";
+  std::cin >> answer;
+  while (answer == 'y') {
+    std::cout << "Enter wall position (x y): ";
     do {
-      std::cout << "Enter ending position (x y): ";
-      std::cin >> endingx >> endingy;
-      maze[endingy - 1][endingx - 1].setEndCase();
-    } while (endingx == startingx && endingy == startingy);
+      std::cin >> wallx >> wally;
+    } while ((wallx == startingx && wally == startingy) ||
+             (wallx == endingx && wally == endingy) || wallx < 1 ||
+             wallx > sizex || wally < 1 || wally > sizey);
+    maze[wally - 1][wallx - 1].setWall();
     std::cout << std::endl;
     maze.display();
     std::cout << std::endl;
-
-    std::cout << "Do you want to add a wall? (y/n) ";
+    std::cout << "Do you want to add another wall? (y/n) ";
     std::cin >> answer;
-    while (answer == 'y') {
-      std::cout << "Enter wall position (x y): ";
-      std::cin >> wallx >> wally;
-      maze[wally - 1][wallx - 1].setWall();
-      std::cout << std::endl;
-      maze.display();
-      std::cout << std::endl;
-      std::cout << "Do you want to add another wall? (y/n) ";
-      std::cin >> answer;
-    };
-
-    return 0;
   }
+  maze.display();
+}
