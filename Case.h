@@ -20,6 +20,7 @@ class Case {
   char getSymbol() const;
   void setStartCase();
   void setEndCase();
+  void setWall();
 };
 
 #endif  // CASE_H
