@@ -1,4 +1,5 @@
 #include "Case.h"
+#include <iostream>
 
 Case::Case()
     : symbol('O'), visited(false), isWall(false), isStart(false), isEnd(false) {}
@@ -21,6 +22,18 @@ void Case::setStartCase()
 
 void Case::setEndCase()
 {
-    symbol = 'E';
-    isEnd = true;
+    if (isStart)
+        std::cout << "Error: End case must be elsewhere than the start case." << std::endl;
+    else{
+        symbol = 'E';
+        isEnd = true;}
+}
+
+void Case::setWall()
+{
+    if (isStart || isEnd)
+        std::cout << "Error: Wall case must be elsewhere than the start or end case." << std::endl;
+    else{
+        symbol = 'X';
+        isWall = true;}
 }
