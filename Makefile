@@ -18,5 +18,4 @@ clean:
 mrproper: clean
 	rm -f *.o
 
-veryclean: mrproper
-	rm -f *~
+
