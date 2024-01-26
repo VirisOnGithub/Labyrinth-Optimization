@@ -12,3 +12,15 @@ char Case::getSymbol() const
 {
     return symbol;
 }
+
+void Case::setStartCase()
+{
+    symbol = 'S';
+    isStart = true;
+}
+
+void Case::setEndCase()
+{
+    symbol = 'E';
+    isEnd = true;
+}

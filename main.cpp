@@ -15,8 +15,8 @@ int main()
     std::cin >> endingx >> endingy;
 
     Maze maze(sizex, sizey);
-    maze[startingy - 1][startingx - 1] = 'S';
-    maze[endingy - 1][endingx - 1] = 'E';
+    maze[startingy - 1][startingx - 1].setStartCase();
+    maze[endingy - 1][endingx - 1].setEndCase();
     
     maze.display();
 

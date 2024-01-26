@@ -15,6 +15,8 @@ public:
     Case(char symbol, bool visited = false, bool isWall = false, bool isStart = false, bool isEnd = false);
     ~Case();
     char getSymbol() const;
+    void setStartCase();
+    void setEndCase();
 };
 
 #endif // CASE_H
