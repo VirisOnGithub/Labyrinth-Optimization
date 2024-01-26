@@ -48,6 +48,6 @@ int main() {
   maze.display();
   std::cout << std::endl;
 
-  maze.parcoursenprofondeur(startingx - 1, startingy - 1, endingx - 1,
-                            endingy - 1, sizex, sizey);
+  maze.parcoursenlargeur(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
+                         sizex, sizey);
 }

@@ -26,7 +26,7 @@ class Maze {
                             int endingy,
                             int sizex,
                             int sizey);
-  
+
   void drawPath(int x, int y);
 };
 

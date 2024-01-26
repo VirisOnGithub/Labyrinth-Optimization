@@ -24,7 +24,7 @@ class Case {
   void setStartCase();
   void setEndCase();
   void setWall();
-  bool getWall();
+  bool getWall() const;
   void setVisited();
 };
 

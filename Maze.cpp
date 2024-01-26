@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <queue>
-#include <stack> 
+#include <stack>
 
 Maze::Maze(int sizex, int sizey) {
   maze.resize(sizex, std::vector<Case>(sizey));
@@ -137,7 +137,7 @@ void Maze::parcoursenprofondeur(int startingx,
       }
     }
   }
-                                }
+}
 
 void Maze::drawPath(int endingx, int endingy) {
   Case* current = &maze[endingx][endingy];

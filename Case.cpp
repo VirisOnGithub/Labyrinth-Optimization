@@ -67,6 +67,6 @@ bool Case::getVisited() const {
   return visited;
 }
 
-bool Case::getWall() {
+bool Case::getWall() const {
   return isWall;
 }
