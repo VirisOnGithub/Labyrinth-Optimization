@@ -14,6 +14,10 @@ class Maze {
   ~Maze();
   void display() const;
   std::vector<Case>& operator[](int index);
+  void parcoursenlargeur(int startingx,
+                         int startingy,
+                         int endingx,
+                         int endingy);
 };
 
 #endif  // MAZE_H

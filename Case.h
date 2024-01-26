@@ -18,9 +18,11 @@ class Case {
        bool isEnd = false);
   ~Case();
   char getSymbol() const;
+  bool getVisited() const;
   void setStartCase();
   void setEndCase();
   void setWall();
+  void setVisited();
 };
 
 #endif  // CASE_H

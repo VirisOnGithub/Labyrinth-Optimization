@@ -46,3 +46,17 @@ void Case::setWall() {
     isWall = true;
   }
 }
+
+void Case::setVisited() {
+  if (isStart || isEnd || isWall)
+    std::cout << "Error: Visited case must be elsewhere than the start, end or "
+                 "wall case."
+              << std::endl;
+  else {
+    visited = true;
+  }
+}
+
+bool Case::getVisited() const {
+  return visited;
+}
