@@ -20,6 +20,13 @@ class Maze {
                          int endingy,
                          int sizex,
                          int sizey);
+  void parcoursenprofondeur(int startingx,
+                            int startingy,
+                            int endingx,
+                            int endingy,
+                            int sizex,
+                            int sizey);
+  
   void drawPath(int x, int y);
 };
 
