@@ -14,18 +14,18 @@ class Maze {
   ~Maze();
   void display() const;
   std::vector<Case>& operator[](int index);
-  void parcoursenlargeur(int startingx,
-                         int startingy,
-                         int endingx,
-                         int endingy,
-                         int sizex,
-                         int sizey);
-  void parcoursenprofondeur(int startingx,
-                            int startingy,
-                            int endingx,
-                            int endingy,
-                            int sizex,
-                            int sizey);
+  void breadthFirstSearch(int startingx,
+                          int startingy,
+                          int endingx,
+                          int endingy,
+                          int sizex,
+                          int sizey);
+  void depthFirstSearch(int startingx,
+                        int startingy,
+                        int endingx,
+                        int endingy,
+                        int sizex,
+                        int sizey);
 
   void drawPath(int x, int y);
 };

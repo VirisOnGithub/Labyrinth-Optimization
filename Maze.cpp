@@ -23,12 +23,12 @@ std::vector<Case>& Maze::operator[](int index) {
   return maze[index];
 }
 
-void Maze::parcoursenlargeur(int startingx,
-                             int startingy,
-                             int endingx,
-                             int endingy,
-                             int sizex,
-                             int sizey) {
+void Maze::breadthFirstSearch(int startingx,
+                              int startingy,
+                              int endingx,
+                              int endingy,
+                              int sizex,
+                              int sizey) {
   std::queue<std::pair<int, int>> q;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
@@ -83,12 +83,12 @@ void Maze::parcoursenlargeur(int startingx,
   std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
 }
 
-void Maze::parcoursenprofondeur(int startingx,
-                                int startingy,
-                                int endingx,
-                                int endingy,
-                                int sizex,
-                                int sizey) {
+void Maze::depthFirstSearch(int startingx,
+                            int startingy,
+                            int endingx,
+                            int endingy,
+                            int sizex,
+                            int sizey) {
   std::stack<std::pair<int, int>> s;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));

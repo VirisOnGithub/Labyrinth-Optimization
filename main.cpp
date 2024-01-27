@@ -52,6 +52,29 @@ int main() {
   maze.display();
   std::cout << std::endl;
 
-  maze.parcoursenlargeur(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
-                         sizex, sizey);
+  short int choice;
+
+  std::cout << "1) Breadth-first search" << std::endl;
+  std::cout << "2) Depth-first search" << std::endl;
+  std::cout << "Enter your choice: ";
+  std::cin >> choice;
+  while (choice != 1 && choice != 2) {
+    std::cout << "Invalid choice. Please enter 1 or 2: ";
+    std::cin >> choice;
+  }
+  std::cout << std::endl;
+  switch (choice) {
+    case 1:
+      maze.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+                              endingy - 1, sizex, sizey);
+      break;
+
+    case 2:
+      maze.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+                            endingy - 1, sizex, sizey);
+      break;
+
+    default:
+      break;
+  }
 }
