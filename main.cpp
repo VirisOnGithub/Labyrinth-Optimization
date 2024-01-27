@@ -13,8 +13,11 @@ int main() {
   maze.display();
   std::cout << std::endl;
 
-  std::cout << "Enter starting position (x y): ";
-  std::cin >> startingx >> startingy;
+  do {
+    std::cout << "Enter starting position (x y): ";
+    std::cin >> startingx >> startingy;
+  } while (startingx < 1 || startingx > sizex || startingy < 1 ||
+           startingy > sizey);
   maze[startingx - 1][startingy - 1].setStartCase();
   std::cout << std::endl;
   maze.display();
@@ -23,8 +26,9 @@ int main() {
   do {
     std::cout << "Enter ending position (x y): ";
     std::cin >> endingx >> endingy;
-    maze[endingx - 1][endingy - 1].setEndCase();
-  } while (endingx == startingx && endingy == startingy);
+  } while ((endingx == startingx && endingy == startingy) || endingx < 1 ||
+           endingx > sizex || endingy < 1 || endingy > sizey);
+  maze[endingx - 1][endingy - 1].setEndCase();
   std::cout << std::endl;
   maze.display();
   std::cout << std::endl;
@@ -38,7 +42,7 @@ int main() {
     } while ((wallx == startingx && wally == startingy) ||
              (wallx == endingx && wally == endingy) || wallx < 1 ||
              wallx > sizex || wally < 1 || wally > sizey);
-    maze[wally - 1][wallx - 1].setWall();
+    maze[wallx - 1][wally - 1].setWall();
     std::cout << std::endl;
     maze.display();
     std::cout << std::endl;
