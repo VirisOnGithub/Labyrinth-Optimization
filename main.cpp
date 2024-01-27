@@ -2,22 +2,43 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <string>
 #include "Case.h"
 #include "Maze.h"
 
+sf::Font font;
+
+sf::Text InputText(std::string text, sf::Vector2f position) {
+  sf::Text inputText;
+  if (!font.loadFromFile("fonts/arial.ttf")) {
+    std::cerr << "Failed to load font\n";
+  } else {
+    std::cout << "Font loaded successfully\n";
+  }
+  inputText.setFont(font);
+  inputText.setFillColor(sf::Color::Red);
+  inputText.setString(text);
+  inputText.setPosition(position);
+  return inputText;
+}
+
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
-  sf::Event event;
-  sf::Font font;
   sf::Text text;
-  if (!font.loadFromFile("fonts/arial.ttf")) {
-    std::cout << "Error loading font" << std::endl;
+  std::string input;
+
+  // Icone
+  sf::Image icon;
+  if (!icon.loadFromFile("assets/icon.jpg")) {
+    std::cerr << "Failed to load icon\n";
+  } else {
+    std::cout << "Icon loaded successfully\n";
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
   }
-  text.setFont(font);
-  text.setCharacterSize(24);
-  text.setFillColor(sf::Color::Red);
-  text.setPosition(10, 10);
-  text.setString("Hello world");
+
+  text = InputText("", sf::Vector2f(0, 0));
+
+  sf::Event event;
   while (window.isOpen()) {
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed)
@@ -25,6 +46,22 @@ int main() {
       if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Escape)
           window.close();
+        if (event.key.code == sf::Keyboard::BackSpace) {
+          if (input.size() > 0) {
+            input.pop_back();
+            text.setString(input);
+          }
+        }
+      }
+      if (event.type == sf::Event::TextEntered) {
+        // Unicode 8 = Backspace, 13 = Enter, 32 = Space, 48-57 = 0-9
+        if (event.text.unicode < 58 && event.text.unicode > 47 &&
+            event.text.unicode != 8 && event.text.unicode != 13) {
+          std::cout << "ASCII character typed: " << (event.text.unicode)
+                    << std::endl;
+          input += static_cast<char>(event.text.unicode);
+          text.setString(input);
+        }
       }
     }
     window.clear();
