@@ -1,8 +1,29 @@
+#include <SFML/Window.hpp>
 #include <iostream>
 #include "Case.h"
 #include "Maze.h"
 
 int main() {
+  sf::Window window(sf::VideoMode(800, 600), "Maze");
+  sf::Event event;
+  Maze maze(10, 10);
+  while (window.isOpen()) {
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+      if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Escape)
+          window.close();
+        if (event.key.code == sf::Keyboard::Space) {
+          maze.breadthFirstSearch(0, 0, 9, 9, 10, 10);
+          maze.display();
+        }
+      }
+    }
+  }
+}
+
+/*int main() {
   int sizex, sizey, startingx, startingy, endingx, endingy, wallx, wally;
   char answer;
 
@@ -77,4 +98,4 @@ int main() {
     default:
       break;
   }
-}
+}*/

@@ -1,7 +1,7 @@
 all: compile
 
 compile: Case.o Case.h main.o Maze.o Maze.h 
-	g++ -g -Wall -o main main.o Case.o Maze.o
+	g++ -g -Wall -o main main.o Case.o Maze.o -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp Case.h Case.cpp Maze.h Maze.cpp
 	g++ -g -Wall -c main.cpp
