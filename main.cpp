@@ -5,22 +5,9 @@
 #include <string>
 #include "Case.h"
 #include "Maze.h"
+#include "functions.h"
 
 sf::Font font;
-
-sf::Text InputText(std::string text, sf::Vector2f position) {
-  sf::Text inputText;
-  if (!font.loadFromFile("fonts/arial.ttf")) {
-    std::cerr << "Failed to load font\n";
-  } else {
-    std::cout << "Font loaded successfully\n";
-  }
-  inputText.setFont(font);
-  inputText.setFillColor(sf::Color::Red);
-  inputText.setString(text);
-  inputText.setPosition(position);
-  return inputText;
-}
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
@@ -36,7 +23,14 @@ int main() {
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
   }
 
-  text = InputText("", sf::Vector2f(0, 0));
+  // Font
+  if (!font.loadFromFile("fonts/arial.ttf")) {
+    std::cerr << "Failed to load font\n";
+  } else {
+    std::cout << "Font loaded successfully\n";
+  }
+
+  text = InputText("", sf::Vector2f(0, 0), font);
 
   sf::Event event;
   while (window.isOpen()) {
