@@ -36,8 +36,8 @@ int main() {
         return -1;
     }
 
-    char buf[256];
-    memset(buf, 0, sizeof(buf));
+    char bufsizex[256];
+    memset(bufsizex, 0, sizeof(bufsizex));
 
     sf::Clock deltaClock;
     while (window.isOpen()) {
@@ -45,15 +45,36 @@ int main() {
         while (window.pollEvent(event)) {
             ImGui::SFML::ProcessEvent(window, event);
 
-            if (event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed or sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 window.close();
             }
         }
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGui::Begin("Demo window");
-        ImGui::InputText("text input", buf, sizeof(buf));
+        ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::SetWindowFontScale(3);
+        ImGui::SetWindowPos(ImVec2(100, 50));
+        ImGui::SetWindowSize(ImVec2(600, 60));
+
+        // Calculer la position horizontale pour centrer le texte
+        float textWidth = ImGui::CalcTextSize("Make your maze").x;
+        float windowWidth = ImGui::GetWindowSize().x;
+        float centerPosX = (windowWidth - textWidth) / 2.0f;
+
+        ImGui::SetCursorPosX(centerPosX);
+
+        ImGui::Text("Make your maze");
+        ImGui::End();
+
+
+        ImGui::Begin("##", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::SetWindowFontScale(1);
+
+        ImGui::SetWindowSize(ImVec2(600, 400));
+        ImGui::SetWindowPos(ImVec2(100, 100));
+        ImGui::InputText("##", bufsizex, sizeof(bufsizex));
+        if (ImGui::Button("OK")) {}
         ImGui::End();
 
         window.clear();
