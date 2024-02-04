@@ -1,0 +1,6 @@
+imgui.ini
+*.o
+main
+version
+*.exe
+imgui-sfml/build

@@ -6,6 +6,8 @@
 #include "Case.h"
 #include "Maze.h"
 #include "functions.h"
+#include "imgui-master/imgui.h"
+#include "imgui-sfml/imgui-SFML.h"
 
 sf::Font font;
 
@@ -29,39 +31,37 @@ int main() {
   } else {
     std::cout << "Font loaded successfully\n";
   }
-
-  text = InputText("", sf::Vector2f(0, 0), font);
-
-  sf::Event event;
-  while (window.isOpen()) {
-    while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed)
-        window.close();
-      if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Escape)
-          window.close();
-        if (event.key.code == sf::Keyboard::BackSpace) {
-          if (input.size() > 0) {
-            input.pop_back();
-            text.setString(input);
-          }
-        }
-      }
-      if (event.type == sf::Event::TextEntered) {
-        // Unicode 8 = Backspace, 13 = Enter, 32 = Space, 48-57 = 0-9
-        if (event.text.unicode < 58 && event.text.unicode > 47 &&
-            event.text.unicode != 8 && event.text.unicode != 13) {
-          std::cout << "ASCII character typed: " << (event.text.unicode)
-                    << std::endl;
-          input += static_cast<char>(event.text.unicode);
-          text.setString(input);
-        }
-      }
+    window.setFramerateLimit(60);
+    if (!ImGui::SFML::Init(window)) {
+        return -1;
     }
-    window.clear();
-    window.draw(text);
-    window.display();
-  }
+
+    char buf[256];
+    memset(buf, 0, sizeof(buf));
+
+    sf::Clock deltaClock;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            ImGui::SFML::ProcessEvent(window, event);
+
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        ImGui::Begin("Demo window");
+        ImGui::InputText("text input", buf, sizeof(buf));
+        ImGui::End();
+
+        window.clear();
+        ImGui::SFML::Render(window);
+        window.display();
+    }
+
+    ImGui::SFML::Shutdown();
 }
 
 /*int main() {
