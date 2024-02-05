@@ -15,6 +15,7 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
   sf::Text text;
   std::string input;
+  bool menu=true;
 
   // Icone
   sf::Image icon;
@@ -52,30 +53,43 @@ int main() {
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-        ImGui::SetWindowFontScale(3);
-        ImGui::SetWindowPos(ImVec2(100, 50));
-        ImGui::SetWindowSize(ImVec2(600, 60));
+        if(menu){
+          ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+          ImGui::SetWindowFontScale(3);
+          ImGui::SetWindowPos(ImVec2(100, 50));
+          ImGui::SetWindowSize(ImVec2(600, 60));
 
-        // Calculer la position horizontale pour centrer le texte
-        float textWidth = ImGui::CalcTextSize("Make your maze").x;
-        float windowWidth = ImGui::GetWindowSize().x;
-        float centerPosX = (windowWidth - textWidth) / 2.0f;
+          // Calculer la position horizontale pour centrer le texte
+          float textWidth = ImGui::CalcTextSize("Make your maze").x;
+          float windowWidth = ImGui::GetWindowSize().x;
+          float centerPosX = (windowWidth - textWidth) / 2.0f;
 
-        ImGui::SetCursorPosX(centerPosX);
+          ImGui::SetCursorPosX(centerPosX);
 
-        ImGui::Text("Make your maze");
-        ImGui::End();
+          ImGui::Text("Make your maze");
+          ImGui::End();
 
 
-        ImGui::Begin("##", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-        ImGui::SetWindowFontScale(1);
+          ImGui::Begin("##", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+          ImGui::SetWindowFontScale(1);
 
-        ImGui::SetWindowSize(ImVec2(600, 400));
-        ImGui::SetWindowPos(ImVec2(100, 100));
-        ImGui::InputText("##", bufsizex, sizeof(bufsizex));
-        if (ImGui::Button("OK")) {}
-        ImGui::End();
+          ImGui::SetWindowSize(ImVec2(600, 400));
+          ImGui::SetWindowPos(ImVec2(100, 100));
+          ImGui::InputText("##", bufsizex, sizeof(bufsizex));
+          if (ImGui::Button("OK")) {
+            input = bufsizex;
+            menu = false;
+          }
+          ImGui::End();
+        } else {
+          ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+          ImGui::SetWindowFontScale(1);
+          ImGui::SetWindowSize(ImVec2(600, 50));
+          ImGui::SetWindowPos(ImVec2(100, 50));
+          ImGui::SetCursorPosX(ImGui::GetWindowSize().x/2 - ImGui::CalcTextSize("Maze size: 00").x/2);
+          ImGui::Text("Maze size: %s", input.c_str());
+          ImGui::End();
+        }
 
         window.clear();
         ImGui::SFML::Render(window);
