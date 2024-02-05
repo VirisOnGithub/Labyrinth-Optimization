@@ -1,6 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <string>
 #include "Case.h"
@@ -14,8 +18,9 @@ sf::Font font;
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
   sf::Text text;
-  std::string input;
-  bool menu=true;
+  std::string inputx, inputy;
+  int x, y;
+  bool menu = true;
 
   // Icone
   sf::Image icon;
@@ -32,72 +37,93 @@ int main() {
   } else {
     std::cout << "Font loaded successfully\n";
   }
-    window.setFramerateLimit(60);
-    if (!ImGui::SFML::Init(window)) {
-        return -1;
+  window.setFramerateLimit(60);
+  if (!ImGui::SFML::Init(window)) {
+    return -1;
+  }
+
+  char bufsizex[10], bufsizey[10];
+  memset(bufsizex, 0, sizeof(bufsizex));
+  memset(bufsizey, 0, sizeof(bufsizey));
+
+  sf::Clock deltaClock;
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      ImGui::SFML::ProcessEvent(window, event);
+
+      if (event.type == sf::Event::Closed or sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        window.close();
+      }
     }
 
-    char bufsizex[256];
-    memset(bufsizex, 0, sizeof(bufsizex));
+    ImGui::SFML::Update(window, deltaClock.restart());
 
-    sf::Clock deltaClock;
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            ImGui::SFML::ProcessEvent(window, event);
+    if (menu) {
+      ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::SetWindowFontScale(3);
+      ImGui::SetWindowPos(ImVec2(100, 50));
+      ImGui::SetWindowSize(ImVec2(600, 60));
 
-            if (event.type == sf::Event::Closed or sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                window.close();
-            }
+      // Calculer la position horizontale pour centrer le texte
+      float textWidth = ImGui::CalcTextSize("Make your maze").x;
+      float windowWidth = ImGui::GetWindowSize().x;
+      float centerPosX = (windowWidth - textWidth) / 2.0f;
+
+      ImGui::SetCursorPosX(centerPosX);
+
+      ImGui::Text("Make your maze");
+      ImGui::End();
+
+
+      ImGui::Begin("##", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::SetWindowFontScale(1);
+
+      ImGui::SetWindowSize(ImVec2(600, 400));
+      ImGui::SetWindowPos(ImVec2(100, 100));
+      ImGui::Text("Largeur du labyrinthe");
+      ImGui::InputText("largeur", bufsizex, sizeof(bufsizex));
+      ImGui::Text("Hauteur du labyrinthe");
+      ImGui::InputText("hauteur", bufsizey, sizeof(bufsizey));
+      if (ImGui::Button("OK")) {
+        inputx = bufsizex;
+        inputy = bufsizey;
+        menu = false;
+      }
+      ImGui::End();
+    } else {
+      ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::SetWindowFontScale(1);
+      ImGui::SetWindowSize(ImVec2(600, 50));
+      ImGui::SetWindowPos(ImVec2(100, 50));
+      ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Maze size: 00").x / 2);
+      ImGui::Text("Maze size: %sx%s", inputx.c_str(), inputy.c_str());
+      ImGui::End();
+      x = std::stoi(inputx);
+      y = std::stoi(inputy);
+
+      Maze maze(x, y);
+
+      int caseHeight = std::min(600 / x, 400 / y);
+      window.clear();
+
+      for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
+          sf::RectangleShape Rect(sf::Vector2f(caseHeight, caseHeight));
+          Rect.setPosition(i * caseHeight+(window.getSize().x - x*caseHeight)/2.0, j * caseHeight+(window.getSize().y+100 - y*caseHeight)/2.0);
+          Rect.setFillColor(sf::Color::White);
+          Rect.setOutlineThickness(1);
+          Rect.setOutlineColor(sf::Color::Black);
+          window.draw(Rect);
         }
-
-        ImGui::SFML::Update(window, deltaClock.restart());
-
-        if(menu){
-          ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-          ImGui::SetWindowFontScale(3);
-          ImGui::SetWindowPos(ImVec2(100, 50));
-          ImGui::SetWindowSize(ImVec2(600, 60));
-
-          // Calculer la position horizontale pour centrer le texte
-          float textWidth = ImGui::CalcTextSize("Make your maze").x;
-          float windowWidth = ImGui::GetWindowSize().x;
-          float centerPosX = (windowWidth - textWidth) / 2.0f;
-
-          ImGui::SetCursorPosX(centerPosX);
-
-          ImGui::Text("Make your maze");
-          ImGui::End();
-
-
-          ImGui::Begin("##", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-          ImGui::SetWindowFontScale(1);
-
-          ImGui::SetWindowSize(ImVec2(600, 400));
-          ImGui::SetWindowPos(ImVec2(100, 100));
-          ImGui::InputText("##", bufsizex, sizeof(bufsizex));
-          if (ImGui::Button("OK")) {
-            input = bufsizex;
-            menu = false;
-          }
-          ImGui::End();
-        } else {
-          ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-          ImGui::SetWindowFontScale(1);
-          ImGui::SetWindowSize(ImVec2(600, 50));
-          ImGui::SetWindowPos(ImVec2(100, 50));
-          ImGui::SetCursorPosX(ImGui::GetWindowSize().x/2 - ImGui::CalcTextSize("Maze size: 00").x/2);
-          ImGui::Text("Maze size: %s", input.c_str());
-          ImGui::End();
-        }
-
-        window.clear();
-        ImGui::SFML::Render(window);
-        window.display();
+      }
     }
+    ImGui::SFML::Render(window);
+    window.display();
+  }
 
-    ImGui::SFML::Shutdown();
-}
+  ImGui::SFML::Shutdown();
+  }
 
 /*int main() {
   int sizex, sizey, startingx, startingy, endingx, endingy, wallx, wally;
