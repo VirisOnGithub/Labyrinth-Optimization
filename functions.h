@@ -5,3 +5,5 @@
 #include <string>
 
 sf::Text InputText(std::string text, sf::Vector2f position, sf::Font& font);
+
+float center(float window, float object);

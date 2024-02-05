@@ -10,3 +10,7 @@ sf::Text InputText(std::string text, sf::Vector2f position, sf::Font& font) {
   inputText.setPosition(position);
   return inputText;
 }
+
+float center(float window, float object) {
+  return (window - object) / 2;
+}

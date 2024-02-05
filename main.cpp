@@ -85,13 +85,17 @@ int main() {
       ImGui::InputText("largeur", bufsizex, sizeof(bufsizex));
       ImGui::Text("Hauteur du labyrinthe");
       ImGui::InputText("hauteur", bufsizey, sizeof(bufsizey));
+      float buttonWidth = ImGui::CalcTextSize("Reset").x;
+      ImGui::SetCursorPosX((windowWidth - buttonWidth) / 2.0f);
       if (ImGui::Button("OK")) {
         inputx = bufsizex;
         inputy = bufsizey;
         menu = false;
       }
       ImGui::End();
+      window.clear();
     } else {
+      // Titre
       ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
       ImGui::SetWindowFontScale(1);
       ImGui::SetWindowSize(ImVec2(600, 50));
@@ -102,6 +106,29 @@ int main() {
       x = std::stoi(inputx);
       y = std::stoi(inputy);
 
+      //inputs 
+      static int choiceCase, choiceSearch;
+
+      ImGui::Begin("Options", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::SetWindowFontScale(1);
+      ImGui::SetWindowSize(ImVec2(200, 400));
+      ImGui::SetWindowPos(ImVec2(550, 150));
+      ImGui::Text("Cases");
+      ImGui::RadioButton("Start", &choiceCase, 0);
+      ImGui::RadioButton("End", &choiceCase, 1);
+      ImGui::RadioButton("Wall", &choiceCase, 2);
+      ImGui::Text("Search");
+      ImGui::RadioButton("Breadth-first", &choiceSearch, 0);
+      ImGui::RadioButton("Depth-first", &choiceSearch, 1);
+      float buttonWidth = ImGui::CalcTextSize("Reset").x;
+      float windowWidth = ImGui::GetWindowSize().x;
+      float centerPosX = (windowWidth - buttonWidth) / 2.0f;
+      ImGui::SetCursorPosX(centerPosX);
+      if (ImGui::Button("Reset")) {
+        menu = true;
+      }
+      ImGui::End();
+
       Maze maze(x, y);
 
       int caseHeight = std::min(600 / x, 400 / y);
@@ -110,7 +137,7 @@ int main() {
       for (int i = 0; i < x; i++) {
         for (int j = 0; j < y; j++) {
           sf::RectangleShape Rect(sf::Vector2f(caseHeight, caseHeight));
-          Rect.setPosition(i * caseHeight+(window.getSize().x - x*caseHeight)/2.0, j * caseHeight+(window.getSize().y+100 - y*caseHeight)/2.0);
+          Rect.setPosition(i * caseHeight+(window.getSize().x-200 - x*caseHeight)/2.0, j * caseHeight+(window.getSize().y+100 - y*caseHeight)/2.0);
           Rect.setFillColor(sf::Color::White);
           Rect.setOutlineThickness(1);
           Rect.setOutlineColor(sf::Color::Black);
