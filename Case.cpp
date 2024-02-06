@@ -48,24 +48,24 @@ void Case::setEndCase() {
   }
 }
 
-void Case::setWall() {
+void Case::setWall(bool wall) {
   if (isStart || isEnd)
     std::cout
         << "Error: Wall case must be elsewhere than the start or end case."
         << std::endl;
   else {
     this->color = sf::Color::Black;
-    isWall = true;
+    isWall = wall;
   }
 }
 
-void Case::setVisited() {
+void Case::setVisited(bool v) {
   if (isStart || isEnd || isWall)
     std::cout << "Error: Visited case must be elsewhere than the start, end or "
                  "wall case."
               << std::endl;
   else {
-    visited = true;
+    visited = v;
   }
 }
 

@@ -135,7 +135,12 @@ int main() {
       ImGui::SetCursorPosX(centerPosX);
       if (ImGui::Button("Reset")) {
         std::cout << "Reset" << std::endl;
-        menu = true;
+        displayCpt = false;
+        cpt = 0;
+        maze = Maze(x, y);
+        hasStart = false;
+        hasEnd = false;
+        
         first = true;
       }
       ImGui::End();
