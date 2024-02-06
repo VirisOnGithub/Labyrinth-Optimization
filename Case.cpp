@@ -1,8 +1,9 @@
 #include "Case.h"
+#include <SFML/Graphics/Color.hpp>
 #include <iostream>
 
 Case::Case()
-    : symbol('O'),
+    : color(sf::Color::White),
       visited(false),
       isWall(false),
       isStart(false),
@@ -12,24 +13,29 @@ Case::~Case() {
   parent = nullptr;
 }
 
-Case::Case(char symbol, bool visited, bool isWall, bool isStart, bool isEnd)
-    : symbol(symbol),
+Case::Case(sf::Color color, bool visited, bool isWall, bool isStart, bool isEnd)
+    : color(color),
       visited(visited),
       isWall(isWall),
       isStart(isStart),
       isEnd(isEnd) {}
 
-char Case::getSymbol() const {
-  return symbol;
+sf::Color Case::getColor() const {
+  return color;
 }
 
-void Case::setSymbol(char symbol) {
-  this->symbol = symbol;
+void Case::setColor(sf::Color color) {
+  this->color = color;
 }
 
 void Case::setStartCase() {
-  symbol = 'S';
-  isStart = true;
+  if (isEnd)
+    std::cout << "Error: Start case must be elsewhere than the end case."
+              << std::endl;
+  else {
+    this->color = sf::Color::Red;
+    isStart = true;
+  }
 }
 
 void Case::setEndCase() {
@@ -37,7 +43,7 @@ void Case::setEndCase() {
     std::cout << "Error: End case must be elsewhere than the start case."
               << std::endl;
   else {
-    symbol = 'E';
+    this->color = sf::Color::Green;
     isEnd = true;
   }
 }
@@ -48,7 +54,7 @@ void Case::setWall() {
         << "Error: Wall case must be elsewhere than the start or end case."
         << std::endl;
   else {
-    symbol = 'X';
+    this->color = sf::Color::Black;
     isWall = true;
   }
 }

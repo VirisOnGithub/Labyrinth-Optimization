@@ -12,7 +12,7 @@ class Maze {
  public:
   Maze(int sizex, int sizey);
   ~Maze();
-  void display() const;
+  void resize(int sizex, int sizey);
   std::vector<Case>& operator[](int index);
   void breadthFirstSearch(int startingx,
                           int startingy,

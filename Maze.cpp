@@ -10,13 +10,8 @@ Maze::Maze(int sizex, int sizey) {
 
 Maze::~Maze() {}
 
-void Maze::display() const {
-  for (unsigned int i = 0; i < maze.size(); i++) {
-    for (unsigned int j = 0; j < maze[i].size(); j++) {
-      std::cout << maze[i][j].getSymbol();
-    }
-    std::cout << std::endl;
-  }
+void Maze::resize(int sizex, int sizey) {
+  maze.resize(sizex, std::vector<Case>(sizey));
 }
 
 std::vector<Case>& Maze::operator[](int index) {
@@ -32,6 +27,8 @@ void Maze::breadthFirstSearch(int startingx,
   std::queue<std::pair<int, int>> q;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
+
+  std::cout << "Starting BFS..." << std::endl;
 
   // Vérifier si les coordonnées de départ et d'arrivée sont valides
   if (startingx < 0 || startingx >= sizex || startingy < 0 ||
@@ -93,6 +90,8 @@ void Maze::depthFirstSearch(int startingx,
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
 
+  std::cout << "Starting DFS..." << std::endl;
+
   // Vérifier si les coordonnées de départ et d'arrivée sont valides
   if (startingx < 0 || startingx >= sizex || startingy < 0 ||
       startingy >= sizey || endingx < 0 || endingx >= sizex || endingy < 0 ||
@@ -143,9 +142,7 @@ void Maze::drawPath(int endingx, int endingy) {
   Case* current = &maze[endingx][endingy];
   current = current->parent;
   while (current->parent != nullptr) {
-    current->setSymbol('*');
+    current->setColor(sf::Color::Cyan);
     current = current->parent;
   }
-
-  display();
 }

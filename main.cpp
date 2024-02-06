@@ -14,14 +14,14 @@
 #include "imgui-sfml/imgui-SFML.h"
 
 sf::Font font;
+Maze maze(100, 100);
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
   sf::Text text;
   std::string inputx, inputy;
-  int x, y;
-  bool menu = true, first=true;
-  std::vector<std::vector<sf::Color>> colors;
+  int x, y, xstart=0, ystart=0, xend=0, yend=0;
+  bool menu = true, first=true, hasStart=false, hasEnd=false;
 
   // Icone
   sf::Image icon;
@@ -99,8 +99,7 @@ int main() {
       if (first) {
         x = std::stoi(inputx);
         y = std::stoi(inputy);
-        Maze maze(x, y);
-        colors.resize(x, std::vector<sf::Color>(y, sf::Color::White));
+        maze.resize(x, y);
         first = false;
       }
 
@@ -135,10 +134,27 @@ int main() {
       float centerPosX = (windowWidth - buttonWidth) / 2.0f;
       ImGui::SetCursorPosX(centerPosX);
       if (ImGui::Button("Reset")) {
+        std::cout << "Reset" << std::endl;
         menu = true;
         first = true;
       }
       ImGui::End();
+
+      ImGui::Begin("Start Button", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::SetWindowFontScale(1);
+      ImGui::SetWindowSize(ImVec2(200, 50));
+      ImGui::SetWindowPos(ImVec2(550, 550));
+      ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Start").x / 2);
+      if (ImGui::Button("Start")) {
+        std::cout << "Start" << std::endl;
+        if (choiceSearch == 0) {
+          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y);
+        } else {
+          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y);
+        }
+      }
+      ImGui::End();
+
 
       int caseHeight = std::min(600 / x, 400 / y);
       window.clear();
@@ -157,13 +173,26 @@ int main() {
             if (Rect.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
               switch (choiceCase) {
                 case 0:
-                  colors[i][j] = sf::Color::Green;
+                  if (!hasStart) {
+                    hasStart = true;
+                    maze[i][j].setStartCase();
+                    xstart = i;
+                    ystart = j;
+                  }
                   break;
                 case 1:
-                  colors[i][j] = sf::Color::Red;
+                  if (!hasEnd) {
+                    hasEnd = true;
+                    maze[i][j].setEndCase();
+                    xend = i;
+                    yend = j;
+                  }
                   break;
                 case 2:
-                  colors[i][j] = sf::Color::Black;
+                  if(maze[i][j].getColor() != sf::Color::Green && maze[i][j].getColor() != sf::Color::Red){
+                    maze[i][j].setColor(sf::Color::Black);
+                    maze[i][j].setWall();
+                  }
                   break;
                 default:
                   break;
@@ -171,7 +200,7 @@ int main() {
             }
           }
 
-          Rect.setFillColor(colors[i][j]);
+          Rect.setFillColor(maze[i][j].getColor());
 
 
           window.draw(Rect);

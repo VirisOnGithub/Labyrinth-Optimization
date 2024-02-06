@@ -1,9 +1,12 @@
 #ifndef CASE_H
 #define CASE_H
 
+#include <SFML/Graphics/Color.hpp>
+
+
 class Case {
  private:
-  char symbol;
+  sf::Color color;
   bool visited;
   bool isWall;
   bool isStart;
@@ -12,14 +15,14 @@ class Case {
  public:
   Case* parent;
   Case();
-  Case(char symbol,
+  Case(sf::Color color,
        bool visited = false,
        bool isWall = false,
        bool isStart = false,
        bool isEnd = false);
   ~Case();
-  char getSymbol() const;
-  void setSymbol(char symbol);
+  sf::Color getColor() const;
+  void setColor(sf::Color color);
   bool getVisited() const;
   void setStartCase();
   void setEndCase();
