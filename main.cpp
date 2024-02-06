@@ -137,6 +137,8 @@ int main() {
         std::cout << "Reset" << std::endl;
         displayCpt = false;
         cpt = 0;
+        x = std::stoi(inputx);
+        y = std::stoi(inputy);
         maze = Maze(x, y);
         hasStart = false;
         hasEnd = false;
@@ -166,8 +168,8 @@ int main() {
         ImGui::SetWindowFontScale(1);
         ImGui::SetWindowSize(ImVec2(200, 50));
         ImGui::SetWindowPos(ImVec2(550, 500));
-        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Cpt: 00").x / 2);
-        ImGui::Text("Cpt: %d", cpt);
+        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Cases parcourues: 00").x / 2);
+        ImGui::Text("Cases parcourues: %d", cpt);
         ImGui::End();
       }
 
