@@ -19,7 +19,7 @@ Maze maze(100, 100);
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
   sf::Text text;
-  std::string inputx, inputy;
+  std::string inputx, inputy, errorMessage;
   int x, y, xstart=0, ystart=0, xend=0, yend=0, cpt=0;
   bool menu = true, first=true, hasStart=false, hasEnd=false, displayCpt=false;
 
@@ -81,9 +81,25 @@ int main() {
       float buttonWidth = ImGui::CalcTextSize("Reset").x;
       ImGui::SetCursorPosX((windowWidth - buttonWidth) / 2.0f);
       if (ImGui::Button("OK")) {
-        inputx = bufsizex;
-        inputy = bufsizey;
-        menu = false;
+        try {
+          int sizex = std::stoi(bufsizex);
+          int sizey = std::stoi(bufsizey);
+
+          if (sizex <= 0 || sizey <= 0) {
+            errorMessage = "Erreur : La largeur et la hauteur du labyrinthe doivent être supérieures à 0.";
+          } else {
+            inputx = bufsizex;
+            inputy = bufsizey;
+            menu = false;
+            errorMessage = ""; // Réinitialise le message d'erreur
+          }
+        } catch (std::invalid_argument& e) {
+          errorMessage = "Erreur : La largeur et la hauteur du labyrinthe doivent être des nombres entiers.";
+        }
+      }
+
+      if (!errorMessage.empty()) {
+        ImGui::Text("%s", errorMessage.c_str());
       }
       ImGui::End();
       window.clear();

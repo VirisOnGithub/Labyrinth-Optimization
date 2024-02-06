@@ -148,6 +148,8 @@ void Maze::depthFirstSearch(int startingx,
       }
     }
   }
+
+  std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
 }
 
 void Maze::drawPath(int endingx, int endingy) {
