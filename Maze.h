@@ -19,13 +19,15 @@ class Maze {
                           int endingx,
                           int endingy,
                           int sizex,
-                          int sizey);
+                          int sizey,
+                          int &cpt);
   void depthFirstSearch(int startingx,
                         int startingy,
                         int endingx,
                         int endingy,
                         int sizex,
-                        int sizey);
+                        int sizey,
+                        int &cpt);
 
   void drawPath(int x, int y);
 };

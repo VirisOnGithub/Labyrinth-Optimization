@@ -23,7 +23,8 @@ void Maze::breadthFirstSearch(int startingx,
                               int endingx,
                               int endingy,
                               int sizex,
-                              int sizey) {
+                              int sizey,
+                              int &cpt) {
   std::queue<std::pair<int, int>> q;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
@@ -73,6 +74,7 @@ void Maze::breadthFirstSearch(int startingx,
         maze[nx][ny].parent = &maze[x][y];
         q.push(std::make_pair(nx, ny));
         visited[nx][ny] = true;
+        cpt++;
       }
     }
   }
@@ -85,7 +87,8 @@ void Maze::depthFirstSearch(int startingx,
                             int endingx,
                             int endingy,
                             int sizex,
-                            int sizey) {
+                            int sizey,
+                            int &cpt) {
   std::stack<std::pair<int, int>> s;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
@@ -133,6 +136,7 @@ void Maze::depthFirstSearch(int startingx,
         maze[nx][ny].parent = &maze[x][y];
         s.push(std::make_pair(nx, ny));
         visited[nx][ny] = true;
+        cpt++;
       }
     }
   }

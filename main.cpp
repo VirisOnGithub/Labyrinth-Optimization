@@ -20,7 +20,7 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
   sf::Text text;
   std::string inputx, inputy;
-  int x, y, xstart=0, ystart=0, xend=0, yend=0;
+  int x, y, xstart=0, ystart=0, xend=0, yend=0, cpt=0;
   bool menu = true, first=true, hasStart=false, hasEnd=false;
 
   // Icone
@@ -148,9 +148,9 @@ int main() {
       if (ImGui::Button("Start")) {
         std::cout << "Start" << std::endl;
         if (choiceSearch == 0) {
-          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y);
+          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt);
         } else {
-          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y);
+          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt);
         }
       }
       ImGui::End();
@@ -213,81 +213,4 @@ int main() {
   }
 
   ImGui::SFML::Shutdown();
-  }
-
-/*int main() {
-  int sizex, sizey, startingx, startingy, endingx, endingy, wallx, wally;
-  char answer;
-
-  std::cout << "Enter the size of the maze (x y): ";
-  std::cin >> sizex >> sizey;
-  Maze maze(sizex, sizey);
-  std::cout << std::endl;
-  maze.display();
-  std::cout << std::endl;
-
-  do {
-    std::cout << "Enter starting position (x y): ";
-    std::cin >> startingx >> startingy;
-  } while (startingx < 1 || startingx > sizex || startingy < 1 ||
-           startingy > sizey);
-  maze[startingx - 1][startingy - 1].setStartCase();
-  std::cout << std::endl;
-  maze.display();
-  std::cout << std::endl;
-
-  do {
-    std::cout << "Enter ending position (x y): ";
-    std::cin >> endingx >> endingy;
-  } while ((endingx == startingx && endingy == startingy) || endingx < 1 ||
-           endingx > sizex || endingy < 1 || endingy > sizey);
-  maze[endingx - 1][endingy - 1].setEndCase();
-  std::cout << std::endl;
-  maze.display();
-  std::cout << std::endl;
-
-  std::cout << "Do you want to add a wall? (y/n) ";
-  std::cin >> answer;
-  while (answer == 'y') {
-    std::cout << "Enter wall position (x y): ";
-    do {
-      std::cin >> wallx >> wally;
-    } while ((wallx == startingx && wally == startingy) ||
-             (wallx == endingx && wally == endingy) || wallx < 1 ||
-             wallx > sizex || wally < 1 || wally > sizey);
-    maze[wallx - 1][wally - 1].setWall();
-    std::cout << std::endl;
-    maze.display();
-    std::cout << std::endl;
-    std::cout << "Do you want to add another wall? (y/n) ";
-    std::cin >> answer;
-  }
-  maze.display();
-  std::cout << std::endl;
-
-  short int choice;
-
-  std::cout << "1) Breadth-first search" << std::endl;
-  std::cout << "2) Depth-first search" << std::endl;
-  std::cout << "Enter your choice: ";
-  std::cin >> choice;
-  while (choice != 1 && choice != 2) {
-    std::cout << "Invalid choice. Please enter 1 or 2: ";
-    std::cin >> choice;
-  }
-  std::cout << std::endl;
-  switch (choice) {
-    case 1:
-      maze.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
-                              endingy - 1, sizex, sizey);
-      break;
-
-    case 2:
-      maze.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
-                            endingy - 1, sizex, sizey);
-      break;
-
-    default:
-      break;
-  }
-}*/
+}
