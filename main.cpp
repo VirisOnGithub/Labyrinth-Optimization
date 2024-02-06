@@ -7,7 +7,7 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-#include "Case.h"
+#include <vector>
 #include "Maze.h"
 #include "functions.h"
 #include "imgui-master/imgui.h"
@@ -20,7 +20,8 @@ int main() {
   sf::Text text;
   std::string inputx, inputy;
   int x, y;
-  bool menu = true;
+  bool menu = true, first=true;
+  std::vector<std::vector<sf::Color>> colors;
 
   // Icone
   sf::Image icon;
@@ -95,6 +96,14 @@ int main() {
       ImGui::End();
       window.clear();
     } else {
+      if (first) {
+        x = std::stoi(inputx);
+        y = std::stoi(inputy);
+        Maze maze(x, y);
+        colors.resize(x, std::vector<sf::Color>(y, sf::Color::White));
+        first = false;
+      }
+
       // Titre
       ImGui::Begin("Maze", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
       ImGui::SetWindowFontScale(1);
@@ -103,8 +112,6 @@ int main() {
       ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Maze size: 00").x / 2);
       ImGui::Text("Maze size: %sx%s", inputx.c_str(), inputy.c_str());
       ImGui::End();
-      x = std::stoi(inputx);
-      y = std::stoi(inputy);
 
       //inputs 
       static int choiceCase, choiceSearch;
@@ -113,23 +120,25 @@ int main() {
       ImGui::SetWindowFontScale(1);
       ImGui::SetWindowSize(ImVec2(200, 400));
       ImGui::SetWindowPos(ImVec2(550, 150));
+
       ImGui::Text("Cases");
       ImGui::RadioButton("Start", &choiceCase, 0);
       ImGui::RadioButton("End", &choiceCase, 1);
       ImGui::RadioButton("Wall", &choiceCase, 2);
+      
       ImGui::Text("Search");
       ImGui::RadioButton("Breadth-first", &choiceSearch, 0);
       ImGui::RadioButton("Depth-first", &choiceSearch, 1);
+
       float buttonWidth = ImGui::CalcTextSize("Reset").x;
       float windowWidth = ImGui::GetWindowSize().x;
       float centerPosX = (windowWidth - buttonWidth) / 2.0f;
       ImGui::SetCursorPosX(centerPosX);
       if (ImGui::Button("Reset")) {
         menu = true;
+        first = true;
       }
       ImGui::End();
-
-      Maze maze(x, y);
 
       int caseHeight = std::min(600 / x, 400 / y);
       window.clear();
@@ -141,9 +150,34 @@ int main() {
           Rect.setFillColor(sf::Color::White);
           Rect.setOutlineThickness(1);
           Rect.setOutlineColor(sf::Color::Black);
+
+          // Vérifier si le bouton de la souris est pressé et si la position de la souris est à l'intérieur de la case
+          if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            if (Rect.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+              switch (choiceCase) {
+                case 0:
+                  colors[i][j] = sf::Color::Green;
+                  break;
+                case 1:
+                  colors[i][j] = sf::Color::Red;
+                  break;
+                case 2:
+                  colors[i][j] = sf::Color::Black;
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+
+          Rect.setFillColor(colors[i][j]);
+
+
           window.draw(Rect);
         }
       }
+
     }
     ImGui::SFML::Render(window);
     window.display();
