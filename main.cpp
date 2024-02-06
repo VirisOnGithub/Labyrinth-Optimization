@@ -24,20 +24,12 @@ int main() {
   bool menu = true, first=true, hasStart=false, hasEnd=false, displayCpt=false;
 
   // Icone
-  sf::Image icon;
-  if (!icon.loadFromFile("assets/icon.jpg")) {
-    std::cerr << "Failed to load icon\n";
-  } else {
-    std::cout << "Icon loaded successfully\n";
-    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-  }
+  loadIcon(window);
+
 
   // Font
-  if (!font.loadFromFile("fonts/arial.ttf")) {
-    std::cerr << "Failed to load font\n";
-  } else {
-    std::cout << "Font loaded successfully\n";
-  }
+  loadFont(font);
+
   window.setFramerateLimit(60);
   if (!ImGui::SFML::Init(window)) {
     return -1;
