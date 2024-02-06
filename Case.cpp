@@ -76,3 +76,12 @@ bool Case::getVisited() const {
 bool Case::getWall() const {
   return isWall;
 }
+
+void Case::reset() {
+  color = sf::Color::White;
+  visited = false;
+  isWall = false;
+  isStart = false;
+  isEnd = false;
+  parent = nullptr;
+}

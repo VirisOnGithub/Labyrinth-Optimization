@@ -29,6 +29,7 @@ class Case {
   void setWall(bool wall = true);
   bool getWall() const;
   void setVisited(bool visited = true);
+  void reset();
 };
 
 #endif  // CASE_H

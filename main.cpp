@@ -129,12 +129,9 @@ int main() {
         std::cout << "Reset" << std::endl;
         displayCpt = false;
         cpt = 0;
-        x = std::stoi(inputx);
-        y = std::stoi(inputy);
-        maze = Maze(x, y);
+        maze.reset();
         hasStart = false;
         hasEnd = false;
-        
         first = true;
       }
       ImGui::End();

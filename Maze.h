@@ -13,6 +13,7 @@ class Maze {
   Maze(int sizex, int sizey);
   ~Maze();
   void resize(int sizex, int sizey);
+  void reset();
   std::vector<Case>& operator[](int index);
   void breadthFirstSearch(int startingx,
                           int startingy,

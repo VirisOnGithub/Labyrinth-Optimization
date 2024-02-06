@@ -14,6 +14,14 @@ void Maze::resize(int sizex, int sizey) {
   maze.resize(sizex, std::vector<Case>(sizey));
 }
 
+void Maze::reset() {
+  for (auto& row : maze) {
+    for (auto& cell : row) {
+      cell.reset();
+    }
+  }
+}
+
 std::vector<Case>& Maze::operator[](int index) {
   return maze[index];
 }
