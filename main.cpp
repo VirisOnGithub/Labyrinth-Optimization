@@ -21,7 +21,7 @@ int main() {
   sf::Text text;
   std::string inputx, inputy;
   int x, y, xstart=0, ystart=0, xend=0, yend=0, cpt=0;
-  bool menu = true, first=true, hasStart=false, hasEnd=false;
+  bool menu = true, first=true, hasStart=false, hasEnd=false, displayCpt=false;
 
   // Icone
   sf::Image icon;
@@ -152,8 +152,19 @@ int main() {
         } else {
           maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt);
         }
+        displayCpt = true;
       }
       ImGui::End();
+
+      if (displayCpt) {
+        ImGui::Begin("Cpt", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+        ImGui::SetWindowFontScale(1);
+        ImGui::SetWindowSize(ImVec2(200, 50));
+        ImGui::SetWindowPos(ImVec2(550, 500));
+        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Cpt: 00").x / 2);
+        ImGui::Text("Cpt: %d", cpt);
+        ImGui::End();
+      }
 
 
       int caseHeight = std::min(600 / x, 400 / y);
