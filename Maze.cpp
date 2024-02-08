@@ -3,6 +3,10 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include "functions.h"
+
+#include <SFML/Graphics.hpp>
+
 
 Maze::Maze(int sizex, int sizey) {
   maze.resize(sizex, std::vector<Case>(sizey));
@@ -32,7 +36,8 @@ void Maze::breadthFirstSearch(int startingx,
                               int endingy,
                               int sizex,
                               int sizey,
-                              int &cpt) {
+                              int &cpt,
+                              sf::RenderWindow& window) {
   std::queue<std::pair<int, int>> q;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
@@ -87,7 +92,7 @@ void Maze::breadthFirstSearch(int startingx,
     }
   }
 
-  std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
+  didNotFindPath(window);
 }
 
 void Maze::depthFirstSearch(int startingx,
@@ -96,7 +101,8 @@ void Maze::depthFirstSearch(int startingx,
                             int endingy,
                             int sizex,
                             int sizey,
-                            int &cpt) {
+                            int &cpt,
+                            sf::RenderWindow& window) {
   std::stack<std::pair<int, int>> s;
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
@@ -149,7 +155,7 @@ void Maze::depthFirstSearch(int startingx,
     }
   }
 
-  std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
+  didNotFindPath(window);
 }
 
 void Maze::drawPath(int endingx, int endingy) {

@@ -11,3 +11,5 @@ float center(float window, float object);
 void loadIcon(sf::RenderWindow& window);
 
 void loadFont(sf::Font& font);
+
+void didNotFindPath(sf::RenderWindow& window);

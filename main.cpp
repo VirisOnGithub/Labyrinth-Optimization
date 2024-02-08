@@ -160,9 +160,9 @@ int main() {
       if (ImGui::Button("Start")) {
         std::cout << "Start" << std::endl;
         if (choiceSearch == 0) {
-          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt);
+          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
         } else {
-          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt);
+          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
         }
         displayCpt = true;
       }

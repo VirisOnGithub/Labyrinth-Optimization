@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System.hpp>
 #include <string>
 #include <iostream>
@@ -32,4 +33,25 @@ void loadFont(sf::Font& font) {
   } else {
     std::cout << "Font loaded successfully\n";
   }
+}
+
+void didNotFindPath(sf::RenderWindow& window) {
+  sf::Font font;
+  loadFont(font);
+  sf::RectangleShape rectangle(sf::Vector2f(window.getSize().x * 0.8f, window.getSize().y * 0.8f));
+  rectangle.setFillColor(sf::Color::Black);
+  rectangle.setPosition(center(window.getSize().x, rectangle.getSize().x),
+              center(window.getSize().y, rectangle.getSize().y));
+  window.draw(rectangle);
+  
+  sf::Text text;
+  text.setFont(font);
+  text.setString("No path found");
+  text.setCharacterSize(24);
+  text.setFillColor(sf::Color::Red);
+  text.setPosition(center(window.getSize().x, text.getGlobalBounds().width),
+                   center(window.getSize().y, text.getGlobalBounds().height));
+  window.draw(text);
+  window.display();
+  sf::sleep(sf::seconds(2));
 }

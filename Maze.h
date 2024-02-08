@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "Case.h"
+#include <SFML/Graphics.hpp>
 
 class Maze {
  private:
@@ -21,14 +22,16 @@ class Maze {
                           int endingy,
                           int sizex,
                           int sizey,
-                          int &cpt);
+                          int &cpt,
+                          sf::RenderWindow& window);
   void depthFirstSearch(int startingx,
                         int startingy,
                         int endingx,
                         int endingy,
                         int sizex,
                         int sizey,
-                        int &cpt);
+                        int &cpt,
+                        sf::RenderWindow& window);
 
   void drawPath(int x, int y);
 };
