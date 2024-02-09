@@ -5,15 +5,16 @@
 #include <vector>
 #include "Case.h"
 
-class Maze {
- private:
+class Maze
+{
+private:
   std::vector<std::vector<Case>> maze;
 
- public:
+public:
   Maze(int sizex, int sizey);
   ~Maze();
   void display() const;
-  std::vector<Case>& operator[](int index);
+  std::vector<Case> &operator[](int index);
   void breadthFirstSearch(int startingx,
                           int startingy,
                           int endingx,
@@ -26,8 +27,13 @@ class Maze {
                         int endingy,
                         int sizex,
                         int sizey);
-
+  void aStarSearch(int startingx,
+                   int startingy,
+                   int endingx,
+                   int endingy,
+                   int sizex,
+                   int sizey);
   void drawPath(int x, int y);
 };
 
-#endif  // MAZE_H
+#endif // MAZE_H

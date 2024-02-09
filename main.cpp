@@ -2,7 +2,8 @@
 #include "Case.h"
 #include "Maze.h"
 
-int main() {
+int main()
+{
   int sizex, sizey, startingx, startingy, endingx, endingy, wallx, wally;
   char answer;
 
@@ -13,7 +14,8 @@ int main() {
   maze.display();
   std::cout << std::endl;
 
-  do {
+  do
+  {
     std::cout << "Enter starting position (x y): ";
     std::cin >> startingx >> startingy;
   } while (startingx < 1 || startingx > sizex || startingy < 1 ||
@@ -23,7 +25,8 @@ int main() {
   maze.display();
   std::cout << std::endl;
 
-  do {
+  do
+  {
     std::cout << "Enter ending position (x y): ";
     std::cin >> endingx >> endingy;
   } while ((endingx == startingx && endingy == startingy) || endingx < 1 ||
@@ -35,9 +38,11 @@ int main() {
 
   std::cout << "Do you want to add a wall? (y/n) ";
   std::cin >> answer;
-  while (answer == 'y') {
+  while (answer == 'y')
+  {
     std::cout << "Enter wall position (x y): ";
-    do {
+    do
+    {
       std::cin >> wallx >> wally;
     } while ((wallx == startingx && wally == startingy) ||
              (wallx == endingx && wally == endingy) || wallx < 1 ||
@@ -56,25 +61,33 @@ int main() {
 
   std::cout << "1) Breadth-first search" << std::endl;
   std::cout << "2) Depth-first search" << std::endl;
+  std::cout << "3) A* search" << std::endl;
   std::cout << "Enter your choice: ";
   std::cin >> choice;
-  while (choice != 1 && choice != 2) {
-    std::cout << "Invalid choice. Please enter 1 or 2: ";
+  while (choice != 1 && choice != 2 && choice != 3)
+  {
+    std::cout << "Invalid choice. Please enter 1, 2 or 3 : ";
     std::cin >> choice;
   }
   std::cout << std::endl;
-  switch (choice) {
-    case 1:
-      maze.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
-                              endingy - 1, sizex, sizey);
-      break;
-
-    case 2:
-      maze.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+  switch (choice)
+  {
+  case 1:
+    maze.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
                             endingy - 1, sizex, sizey);
-      break;
+    break;
 
-    default:
-      break;
+  case 2:
+    maze.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+                          endingy - 1, sizex, sizey);
+    break;
+
+  case 3:
+    maze.aStarSearch(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
+                     sizex, sizey);
+    break;
+
+  default:
+    break;
   }
 }
