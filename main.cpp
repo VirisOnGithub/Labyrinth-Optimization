@@ -4,7 +4,7 @@
 
 int main()
 {
-  int sizex, sizey, startingx, startingy, endingx, endingy, wallx, wally;
+  int sizex, sizey, startingx, startingy, endingx, endingy;
   char answer;
 
   std::cout << "Enter the size of the maze (x y): ";
@@ -40,14 +40,15 @@ int main()
   std::cin >> answer;
   while (answer == 'y')
   {
-    std::cout << "Enter wall position (x y): ";
-    do
-    {
-      std::cin >> wallx >> wally;
-    } while ((wallx == startingx && wally == startingy) ||
-             (wallx == endingx && wally == endingy) || wallx < 1 ||
-             wallx > sizex || wally < 1 || wally > sizey);
-    maze[wallx - 1][wally - 1].setWall();
+    // std::cout << "Enter wall position (x y): ";
+    // do
+    // {
+    //   std::cin >> wallx >> wally;
+    // } while ((wallx == startingx && wally == startingy) ||
+    //          (wallx == endingx && wally == endingy) || wallx < 1 ||
+    //          wallx > sizex || wally < 1 || wally > sizey);
+    // maze[wallx - 1][wally - 1].setWall();
+    maze.setwallrandom(startingx, startingy, endingx, endingy, sizex, sizey);
     std::cout << std::endl;
     maze.display();
     std::cout << std::endl;

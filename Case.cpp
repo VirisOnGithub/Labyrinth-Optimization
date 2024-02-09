@@ -1,5 +1,6 @@
 #include "Case.h"
 #include <iostream>
+#include <random>
 
 Case::Case()
     : symbol('O'),

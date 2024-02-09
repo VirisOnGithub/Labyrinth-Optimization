@@ -1,5 +1,5 @@
 #include "Maze.h"
-
+#include "Case.h"
 #include <iostream>
 #include <queue>
 #include <stack>
@@ -267,4 +267,25 @@ void Maze::aStarSearch(int startingx,
 
   std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
   std::cout << "Nombre de cases parcourues : " << cellCount << std::endl;
+}
+
+void Maze::setwallrandom(int startingx,
+                         int startingy,
+                         int endingx,
+                         int endingy,
+                         int sizex,
+                         int sizey)
+{
+  int wallx, wally;
+  srand(time(NULL));
+  wallx = rand() % sizex;
+  wally = rand() % sizey;
+  if ((wallx != startingx && wally != startingy) || (wallx != endingx && wally != endingy) || !maze[wallx][wally].getWall())
+  {
+    maze[wallx][wally].setWall();
+  }
+  else
+  {
+    setwallrandom(startingx, startingy, endingx, endingy, sizex, sizey);
+  }
 }
