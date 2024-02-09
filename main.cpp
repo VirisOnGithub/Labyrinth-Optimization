@@ -5,7 +5,7 @@
 int main()
 {
   int sizex, sizey, startingx, startingy, endingx, endingy;
-  char answer;
+  char answer1, answer2;
 
   std::cout << "Enter the size of the maze (x y): ";
   std::cin >> sizex >> sizey;
@@ -37,23 +37,26 @@ int main()
   std::cout << std::endl;
 
   std::cout << "Do you want to add a wall? (y/n) ";
-  std::cin >> answer;
-  while (answer == 'y')
+  std::cin >> answer1;
+  while (answer1 == 'y')
   {
-    // std::cout << "Enter wall position (x y): ";
-    // do
-    // {
-    //   std::cin >> wallx >> wally;
-    // } while ((wallx == startingx && wally == startingy) ||
-    //          (wallx == endingx && wally == endingy) || wallx < 1 ||
-    //          wallx > sizex || wally < 1 || wally > sizey);
-    // maze[wallx - 1][wally - 1].setWall();
-    maze.setwallrandom(startingx, startingy, endingx, endingy, sizex, sizey);
+    std::cout << "Randomly add a wall? (y/n) ";
+    std::cin >> answer2;
+    if (answer2 == 'n')
+    {
+      maze.setwallnotrandom(startingx, startingy, endingx, endingy, sizex,
+                            sizey);
+    }
+    else
+    {
+      maze.setwallrandom(startingx, startingy, endingx, endingy, sizex, sizey);
+    }
+
     std::cout << std::endl;
     maze.display();
     std::cout << std::endl;
     std::cout << "Do you want to add another wall? (y/n) ";
-    std::cin >> answer;
+    std::cin >> answer1;
   }
   maze.display();
   std::cout << std::endl;

@@ -24,7 +24,9 @@ public:
      void setSymbol(char symbol);
      bool getVisited() const;
      void setStartCase();
+     bool getStartCase() const;
      void setEndCase();
+     bool getEndCase() const;
      void setWall();
      bool getWall() const;
      void setVisited();

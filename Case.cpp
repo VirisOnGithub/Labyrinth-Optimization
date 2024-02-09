@@ -37,6 +37,11 @@ void Case::setStartCase()
   isStart = true;
 }
 
+bool Case::getStartCase() const
+{
+  return isStart;
+}
+
 void Case::setEndCase()
 {
   if (isStart)
@@ -47,6 +52,11 @@ void Case::setEndCase()
     symbol = 'E';
     isEnd = true;
   }
+}
+
+bool Case::getEndCase() const
+{
+  return isEnd;
 }
 
 void Case::setWall()
