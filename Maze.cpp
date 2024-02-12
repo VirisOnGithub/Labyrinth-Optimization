@@ -277,7 +277,6 @@ void Maze::setwallrandom(int startingx,
                          int sizey)
 {
   int wallx, wally;
-  srand(time(NULL));
   wallx = rand() % sizex;
   wally = rand() % sizey;
   if (!(maze[wallx][wally].getEndCase()) && !(maze[wallx][wally].getStartCase()) && !(maze[wallx][wally].getWall()))
@@ -290,6 +289,7 @@ void Maze::setwallrandom(int startingx,
   {
     std::cout << "Error: Wall case must be elsewhere than the start, end or wall case." << std::endl;
     std::cout << "Wall not added at position (" << wallx + 1 << ", " << wally + 1 << ")." << std::endl;
+    setwallrandom(startingx, startingy, endingx, endingy, sizex, sizey);
   }
 }
 
