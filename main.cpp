@@ -158,7 +158,8 @@ int main() {
       ImGui::SetWindowPos(ImVec2(550, 550));
       ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - ImGui::CalcTextSize("Start").x / 2);
       if (ImGui::Button("Start")) {
-        std::cout << "Start" << std::endl;
+        std::cout << "Start..." << std::endl;
+        maze.partialReset();
         if (choiceSearch == 0) {
           maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
         } else {
@@ -196,7 +197,7 @@ int main() {
             if (Rect.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
               switch (choiceCase) {
                 case 0:
-                  if (!hasStart) {
+                  if (!hasStart && maze[i][j].getColor() != sf::Color::Black) {
                     hasStart = true;
                     maze[i][j].setStartCase();
                     xstart = i;
@@ -204,7 +205,7 @@ int main() {
                   }
                   break;
                 case 1:
-                  if (!hasEnd) {
+                  if (!hasEnd && maze[i][j].getColor() != sf::Color::Black) {
                     hasEnd = true;
                     maze[i][j].setEndCase();
                     xend = i;

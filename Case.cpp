@@ -85,3 +85,10 @@ void Case::reset() {
   isEnd = false;
   parent = nullptr;
 }
+
+void Case::partialReset(){
+  if(!isWall && !isEnd & !isStart){
+    reset();
+  } else if (isEnd)
+    parent = nullptr;
+}

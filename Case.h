@@ -30,6 +30,7 @@ class Case {
   bool getWall() const;
   void setVisited(bool visited = true);
   void reset();
+  void partialReset();
 };
 
 #endif  // CASE_H

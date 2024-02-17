@@ -166,3 +166,11 @@ void Maze::drawPath(int endingx, int endingy) {
     current = current->parent;
   }
 }
+
+void Maze::partialReset() {
+  for (auto& row : maze) {
+    for (auto& cell : row) {
+      cell.partialReset();
+    }
+  }
+}

@@ -34,6 +34,7 @@ class Maze {
                         sf::RenderWindow& window);
 
   void drawPath(int x, int y);
+  void partialReset();
 };
 
 #endif  // MAZE_H
