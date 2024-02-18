@@ -190,12 +190,12 @@ void Maze::aStar(int startingx,
   while (!v.empty()) {
     // Trier la liste en fonction de la distance
     std::sort(v.begin(), v.end(), [](const std::pair<float, std::pair<int, int>>& a, const std::pair<float, std::pair<int, int>>& b) {
-      return a.first < b.first;
+      return a.first > b.first;
     });
 
     // Obtenir les coordonnées du prochain nœud à visiter
-    int x = v.front().second.first;
-    int y = v.front().second.second;
+    int x = v.back().second.first;
+    int y = v.back().second.second;
     v.pop_back();
 
     // Vérifier si on a atteint la destination
