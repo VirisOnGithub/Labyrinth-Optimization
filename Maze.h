@@ -32,6 +32,16 @@ class Maze {
                         int sizey,
                         int &cpt,
                         sf::RenderWindow& window);
+  void aStar(int startingx,
+              int startingy,
+              int endingx,
+              int endingy,
+              int sizex,
+              int sizey,
+              int &cpt,
+              sf::RenderWindow& window);
+
+  float distance(int x, int y, int endingx, int endingy);
 
   void drawPath(int x, int y);
   void partialReset();

@@ -136,6 +136,7 @@ int main() {
       ImGui::Text("Search");
       ImGui::RadioButton("Breadth-first", &choiceSearch, 0);
       ImGui::RadioButton("Depth-first", &choiceSearch, 1);
+      ImGui::RadioButton("A*", &choiceSearch, 2);
 
       float buttonWidth = ImGui::CalcTextSize("Reset").x;
       float windowWidth = ImGui::GetWindowSize().x;
@@ -160,10 +161,20 @@ int main() {
       if (ImGui::Button("Start")) {
         std::cout << "Start..." << std::endl;
         maze.partialReset();
-        if (choiceSearch == 0) {
-          maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
-        } else {
-          maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
+        cpt=0;
+        displayCpt=false;
+        switch (choiceSearch) {
+          case 0:
+            maze.breadthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
+            break;
+          case 1:
+            maze.depthFirstSearch(xstart, ystart, xend, yend, x, y, cpt, window);
+            break;
+          case 2:
+            maze.aStar(xstart, ystart, xend, yend, x, y, cpt, window);
+            break;
+          default:
+            break;
         }
         displayCpt = true;
       }
