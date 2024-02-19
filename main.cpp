@@ -87,8 +87,8 @@ int main()
     break;
 
   case 3:
-    maze.aStarSearch(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
-                     sizex, sizey);
+    maze.aStar(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
+               sizex, sizey);
     break;
 
   default:

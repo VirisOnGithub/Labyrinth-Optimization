@@ -27,12 +27,12 @@ public:
                         int endingy,
                         int sizex,
                         int sizey);
-  void aStarSearch(int startingx,
-                   int startingy,
-                   int endingx,
-                   int endingy,
-                   int sizex,
-                   int sizey);
+  void aStar(int startingx,
+             int startingy,
+             int endingx,
+             int endingy,
+             int sizex,
+             int sizey);
   void setwallrandom(int startingx,
                      int startingy,
                      int endingx,
@@ -46,6 +46,7 @@ public:
                         int sizex,
                         int sizey);
   void drawPath(int x, int y);
+  float distance(int x, int y, int endingx, int endingy);
 };
 
 #endif // MAZE_H

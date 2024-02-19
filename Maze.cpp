@@ -4,6 +4,7 @@
 #include <queue>
 #include <stack>
 #include <cmath>
+#include <algorithm>
 
 Maze::Maze(int sizex, int sizey)
 {
@@ -182,19 +183,19 @@ void Maze::drawPath(int endingx, int endingy)
   display();
 }
 
-void Maze::aStarSearch(int startingx,
-                       int startingy,
-                       int endingx,
-                       int endingy,
-                       int sizex,
-                       int sizey)
+void Maze::aStar(int startingx,
+                 int startingy,
+                 int endingx,
+                 int endingy,
+                 int sizex,
+                 int sizey)
 {
-  std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>,
-                      std::greater<std::pair<int, int>>>
-      q;
+  std::vector<std::pair<float, std::pair<int, int>>> v; // (distance, (x, y))
   std::vector<std::vector<bool>> visited(sizex,
                                          std::vector<bool>(sizey, false));
-  int cellCount = 0; // Counter for the number of cells visited
+
+  std::cout << "Starting A*..." << std::endl;
+  int cellcount = 0;
 
   // Vérifier si les coordonnées de départ et d'arrivée sont valides
   if (startingx < 0 || startingx >= sizex || startingy < 0 ||
@@ -205,68 +206,56 @@ void Maze::aStarSearch(int startingx,
     return;
   }
 
-  // Ajouter les coordonnées de départ à la file d'attente et marquer comme
-  // visité
-  q.push(std::make_pair(startingx, startingy));
+  // Ajouter les coordonnées de départ à la liste et marquer comme visité
+  v.push_back(std::make_pair(distance(startingx, startingy, endingx, endingy), std::make_pair(startingx, startingy)));
   visited[startingx][startingy] = true;
-  cellCount++;
+  cellcount++;
 
-  while (!q.empty())
+  while (!v.empty())
   {
+    // Trier la liste en fonction de la distance
+    std::sort(v.begin(), v.end(), [](const std::pair<float, std::pair<int, int>> &a, const std::pair<float, std::pair<int, int>> &b)
+              { return a.first > b.first; });
+
     // Obtenir les coordonnées du prochain nœud à visiter
-    int x = q.top().first;
-    int y = q.top().second;
-    q.pop();
-    maze[x][y].setDistance(sqrt(pow(endingx - x, 2) + pow(endingy - y, 2)));
+    int x = v.back().second.first;
+    int y = v.back().second.second;
+    v.pop_back();
 
     // Vérifier si on a atteint la destination
     if (x == endingx && y == endingy)
     {
       std::cout << "Destination atteinte !" << std::endl;
       drawPath(endingx, endingy);
-      std::cout << "Nombre de cases parcourues : " << cellCount << std::endl;
+      std::cout << "Nombre de cases parcourues : " << cellcount << std::endl;
       return;
     }
 
     // Parcourir les voisins du nœud actuel
     // (ici, vous devrez im plémenter votre propre logique pour déterminer les
     // voisins) Exemple : parcours des 4 directions (haut, bas, gauche, droite)
-    std::vector<std::pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    std::vector<std::pair<int, int>> directions = {
+        {-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     for (const auto &dir : directions)
     {
       int nx = x + dir.first;
       int ny = y + dir.second;
 
-      // Vérifier si les coordonnées du voisin sont valides
-      if (nx >= 0 && nx < sizex && ny >= 0 && ny < sizey)
+      // Vérifier si les coordonnées du voisin sont valides et non visitées
+      if (nx >= 0 && nx < sizex && ny >= 0 && ny < sizey && !visited[nx][ny] &&
+          !maze[nx][ny].getVisited() && !maze[nx][ny].getWall())
       {
-        maze[nx][ny].setDistance(sqrt(pow(endingx - nx, 2) + pow(endingy - ny, 2)));
-
-        // Vérifier si le voisin n'a pas été visité et n'est pas un mur
-        if (!visited[nx][ny] && !maze[nx][ny].getVisited() && !maze[nx][ny].getWall())
-        {
-          if (maze[nx][ny].getDistance() < maze[x][y].getDistance())
-          {
-            maze[nx][ny].parent = &maze[x][y];
-            q.push(std::make_pair(nx, ny));
-            visited[nx][ny] = true;
-            cellCount++;
-          }
-          else if (maze[nx][ny].getDistance() > maze[x][y].getDistance() + 1)
-          {
-            maze[nx][ny].setDistance(maze[x][y].getDistance() + 1);
-          }
-          else
-          {
-            maze[nx][ny].setDistance(maze[x][y].getDistance());
-          }
-        }
+        // Ajouter les coordonnées du voisin à la liste et marquer comme visité
+        maze[nx][ny].parent = &maze[x][y];
+        v.push_back(std::make_pair(distance(nx, ny, endingx, endingy), std::make_pair(nx, ny)));
+        visited[nx][ny] = true;
+        cellcount++;
       }
     }
   }
 
   std::cout << "Aucun chemin trouvé jusqu'à la destination." << std::endl;
-  std::cout << "Nombre de cases parcourues : " << cellCount << std::endl;
+  std::cout << "Nombre de cases parcourues : " << cellcount << std::endl;
 }
 
 void Maze::setwallrandom(int startingx,
@@ -309,4 +298,9 @@ void Maze::setwallnotrandom(int startingx,
            (wallx == endingx && wally == endingy) || wallx < 1 ||
            wallx > sizex || wally < 1 || wally > sizey);
   maze[wallx - 1][wally - 1].setWall();
+}
+
+float Maze::distance(int x, int y, int endingx, int endingy)
+{
+  return sqrt(pow(endingx - x, 2) + pow(endingy - y, 2));
 }
