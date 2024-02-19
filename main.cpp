@@ -6,10 +6,12 @@ int main()
 {
   int sizex, sizey, startingx, startingy, endingx, endingy;
   char answer1, answer2;
+  bool reset = true;
 
   std::cout << "Enter the size of the maze (x y): ";
   std::cin >> sizex >> sizey;
   Maze maze(sizex, sizey);
+  Maze maze1(sizex, sizey);
   std::cout << std::endl;
   maze.display();
   std::cout << std::endl;
@@ -61,37 +63,54 @@ int main()
   maze.display();
   std::cout << std::endl;
 
-  short int choice;
-
-  std::cout << "1) Breadth-first search" << std::endl;
-  std::cout << "2) Depth-first search" << std::endl;
-  std::cout << "3) A* search" << std::endl;
-  std::cout << "Enter your choice: ";
-  std::cin >> choice;
-  while (choice != 1 && choice != 2 && choice != 3)
+  while (reset)
   {
-    std::cout << "Invalid choice. Please enter 1, 2 or 3 : ";
+    maze1 = maze;
+    short int choice;
+
+    std::cout << "1) Breadth-first search" << std::endl;
+    std::cout << "2) Depth-first search" << std::endl;
+    std::cout << "3) A* search" << std::endl;
+    std::cout << "Enter your choice: ";
     std::cin >> choice;
-  }
-  std::cout << std::endl;
-  switch (choice)
-  {
-  case 1:
-    maze.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
-                            endingy - 1, sizex, sizey);
-    break;
+    while (choice != 1 && choice != 2 && choice != 3)
+    {
+      std::cout << "Invalid choice. Please enter 1, 2 or 3 : ";
+      std::cin >> choice;
+    }
+    std::cout << std::endl;
+    switch (choice)
+    {
+    case 1:
+      maze1.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+                               endingy - 1, sizex, sizey);
+      break;
 
-  case 2:
-    maze.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
-                          endingy - 1, sizex, sizey);
-    break;
+    case 2:
+      maze1.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
+                             endingy - 1, sizex, sizey);
+      break;
 
-  case 3:
-    maze.aStar(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
-               sizex, sizey);
-    break;
+    case 3:
+      maze1.aStar(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
+                  sizex, sizey);
+      break;
 
-  default:
-    break;
+    default:
+      break;
+    }
+
+    std::cout << "Voulez vous changer de parcours ? (y/n)" << std::endl;
+    char choix;
+    std::cin >> choix;
+    if (choix == 'y')
+    {
+      reset = true;
+    }
+    else
+    {
+      reset = false;
+    }
+    std::cout << std::endl;
   }
 }
