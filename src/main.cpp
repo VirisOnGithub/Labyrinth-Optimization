@@ -1,5 +1,5 @@
+#include <cstdlib>
 #include <iostream>
-#include "Case.h"
 #include "Maze.h"
 
 int main()
@@ -7,6 +7,14 @@ int main()
   int sizex, sizey, startingx, startingy, endingx, endingy;
   char answer1, answer2;
   bool reset = true;
+
+  std::cout << "Bienvenue dans le Projet d'Optimisation de Labyrinthe !" << std::endl;
+  std::cout << "-------------------------------------------------------" << std::endl;
+  std::cout << "Ce programme vous permet de créer et de résoudre des labyrinthes." << std::endl;
+  std::cout << std::endl;
+  std::cout << "Appuyez sur n'importe quelle touche pour continuer..." << std::endl;
+  std::cin.ignore();
+  system("clear");
 
   std::cout << "Enter the size of the maze (x y): ";
   std::cin >> sizex >> sizey;
