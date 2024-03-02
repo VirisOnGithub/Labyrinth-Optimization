@@ -1,22 +1,27 @@
+$(shell mkdir -p obj)
+$(shell mkdir -p bin)
+OBJ_DIR = obj
+SRC_DIR = src
+BIN_DIR = bin
+
 all: compile
 
-compile: Case.o Case.h main.o Maze.o Maze.h 
-	g++ -g -Wall -o main main.o Case.o Maze.o
+compile: $(OBJ_DIR)/Case.o $(SRC_DIR)/Case.h $(OBJ_DIR)/main.o $(OBJ_DIR)/Maze.o $(SRC_DIR)/Maze.h 
+	g++ -g -Wall -o $(BIN_DIR)/main $(OBJ_DIR)/main.o $(OBJ_DIR)/Case.o $(OBJ_DIR)/Maze.o
 
-main.o: main.cpp Case.h Case.cpp Maze.h Maze.cpp
-	g++ -g -Wall -c main.cpp
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.cpp $(SRC_DIR)/Case.h $(SRC_DIR)/Case.cpp $(SRC_DIR)/Maze.h $(SRC_DIR)/Maze.cpp
+	g++ -g -Wall -c $(SRC_DIR)/main.cpp -o $(OBJ_DIR)/main.o
 
-Case.o: Case.h Case.cpp
-	g++ -g -Wall -c Case.cpp
+$(OBJ_DIR)/Case.o: $(SRC_DIR)/Case.h $(SRC_DIR)/Case.cpp
+	g++ -g -Wall -c $(SRC_DIR)/Case.cpp -o $(OBJ_DIR)/Case.o
 
-Maze.o: Maze.h Maze.cpp Case.h Case.cpp
-	g++ -g -Wall -c Maze.cpp
+$(OBJ_DIR)/Maze.o: $(SRC_DIR)/Maze.h $(SRC_DIR)/Maze.cpp $(SRC_DIR)/Case.h $(SRC_DIR)/Case.cpp
+	g++ -g -Wall -c $(SRC_DIR)/Maze.cpp -o $(OBJ_DIR)/Maze.o
 
 clean:
-	rm -f main
+	rm -f $(BIN_DIR)/main
 
 mrproper: clean
-	rm -f *.o
+	rm -f $(OBJ_DIR)/*.o
 
-m : mrproper
-
+m: mrproper

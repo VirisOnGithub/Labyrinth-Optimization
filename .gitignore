@@ -1,0 +1,7 @@
+*.o
+*.ini
+imgui-master/*
+main
+
+.vscode/*
+.idea
