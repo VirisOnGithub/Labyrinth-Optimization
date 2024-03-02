@@ -7,8 +7,6 @@ Ce projet a été réalisé dans le cadre de l'UE Gestion de Projet instaurée e
 Son objectif est d'étudier les différents parcours possibles d'une case de départ à une case d'arrivée.
 </p>
 
-
-
 <div align="center">
     <a href="#clone">Clone</a> |
     <a href="#exécution">Exécution</a>
@@ -19,7 +17,7 @@ Son objectif est d'étudier les différents parcours possibles d'une case de dé
 Pour récupérer le projet, il suffit de cloner le dépôt git :
 
 ```sh
-$ git clone https://github.com/VirisOnGithub/Labyrinth-Optimization.git 
+$ git clone https://github.com/VirisOnGithub/Labyrinth-Optimization.git
 ```
 
 Vous pouvez aussi télécharger le projet en .zip en cliquant sur le bouton "Code" puis "Download ZIP".
@@ -35,5 +33,5 @@ Pour exécuter le projet, il suffit de cloner le dépôt git et de lancer la com
 $ git clone https://github.com/VirisOnGithub/Labyrinth-Optimization.git
 $ cd Labyrinth-Optimization
 $ make
-$ ./main
+$ ./bin/main
 ```
