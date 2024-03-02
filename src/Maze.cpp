@@ -15,6 +15,7 @@ Maze::~Maze() {}
 
 void Maze::display() const
 {
+  system("clear");
   for (unsigned int i = 0; i < maze.size(); i++)
   {
     for (unsigned int j = 0; j < maze[i].size(); j++)
