@@ -11,6 +11,7 @@ int main()
   char answer1, answer2;
   bool reset = true;
 
+  system("clear");
   std::cout << "Bienvenue dans le Projet d'Optimisation de Labyrinthe !" << std::endl;
   std::cout << "-------------------------------------------------------" << std::endl;
   std::cout << "Ce programme vous permet de créer et de résoudre des labyrinthes." << std::endl;
@@ -117,8 +118,8 @@ int main()
       break;
     }
     std::cout << std::endl;
-    std::cout << "Temps écoulé : " << (double)(end - start) / CLOCKS_PER_SEC
-              << " secondes" << std::endl;
+    std::cout << "Temps écoulé : " << (double)(end - start)*1000 / CLOCKS_PER_SEC
+              << " millisecondes" << std::endl;
 
     std::cout << "Voulez vous changer de parcours ? (y/n)" << std::endl;
     char choix;
