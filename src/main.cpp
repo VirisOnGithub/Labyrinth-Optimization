@@ -1,9 +1,12 @@
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <time.h>
 #include "Maze.h"
 
 int main()
 {
+  clock_t start, end;
   int sizex, sizey, startingx, startingy, endingx, endingy;
   char answer1, answer2;
   bool reset = true;
@@ -90,23 +93,32 @@ int main()
     switch (choice)
     {
     case 1:
+      start = clock();
       maze1.breadthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
                                endingy - 1, sizex, sizey);
+      end = clock();
       break;
 
     case 2:
+      start = clock();
       maze1.depthFirstSearch(startingx - 1, startingy - 1, endingx - 1,
                              endingy - 1, sizex, sizey);
+      end = clock();
       break;
 
     case 3:
+      start = clock();
       maze1.aStar(startingx - 1, startingy - 1, endingx - 1, endingy - 1,
                   sizex, sizey);
+      end = clock();
       break;
 
     default:
       break;
     }
+    std::cout << std::endl;
+    std::cout << "Temps écoulé : " << (double)(end - start) / CLOCKS_PER_SEC
+              << " secondes" << std::endl;
 
     std::cout << "Voulez vous changer de parcours ? (y/n)" << std::endl;
     char choix;
