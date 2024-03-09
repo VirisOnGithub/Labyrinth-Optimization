@@ -1,7 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System.hpp>
-#include <string>
 #include <iostream>
 
 sf::Text InputText(std::string text, sf::Vector2f position, sf::Font& font) {

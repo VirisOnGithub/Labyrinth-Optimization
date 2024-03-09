@@ -1,13 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <algorithm>
-#include <cstring>
-#include <iostream>
-#include <string>
-#include <vector>
 #include "Maze.h"
 #include "functions.h"
 #include "imgui-master/imgui.h"
@@ -248,4 +238,5 @@ int main() {
   }
 
   ImGui::SFML::Shutdown();
+  return 0;
 }
