@@ -25,7 +25,7 @@ int main()
   Maze maze(sizex, sizey);
   Maze maze1(sizex, sizey);
   std::cout << std::endl;
-  maze.display();
+ 
   std::cout << std::endl;
 
   do
@@ -36,7 +36,7 @@ int main()
            startingy > sizey);
   maze[startingx - 1][startingy - 1].setStartCase();
   std::cout << std::endl;
-  maze.display();
+ 
   std::cout << std::endl;
 
   do
@@ -47,7 +47,7 @@ int main()
            endingx > sizex || endingy < 1 || endingy > sizey);
   maze[endingx - 1][endingy - 1].setEndCase();
   std::cout << std::endl;
-  maze.display();
+ 
   std::cout << std::endl;
 
   std::cout << "Do you want to add a wall? (y/n) ";
@@ -67,12 +67,12 @@ int main()
     }
 
     std::cout << std::endl;
-    maze.display();
+   
     std::cout << std::endl;
     std::cout << "Do you want to add another wall? (y/n) ";
     std::cin >> answer1;
   }
-  maze.display();
+ 
   std::cout << std::endl;
 
   while (reset)
