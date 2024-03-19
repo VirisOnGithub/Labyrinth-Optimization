@@ -180,8 +180,6 @@ void Maze::drawPath(int endingx, int endingy)
     current->setSymbol('*');
     current = current->parent;
   }
-
-  display();
 }
 
 void Maze::aStar(int startingx,
